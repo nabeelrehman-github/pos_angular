@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataAccessService } from './services/data-access.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,39 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'invty-mgmt-sys';
+  title = 'Inventory Management ';
+
+  textClass = "text-primary";
+  modalMessage = "";
+  isAuthenticated = true
+
+  constructor(private router: Router, private dataAccess: DataAccessService) {
+    this.dataAccess.getAuthentication().subscribe(
+      res => {
+        this.isAuthenticated = res;
+      }
+    )
+
+    this.dataAccess.getModalMessage().subscribe(
+      res => {
+        this.modalMessage = res;
+      }
+    )
+
+    this.dataAccess.getModalType().subscribe(
+      res => {
+        this.textClass = "text-" + res;
+      }
+    )
+  }
+
+  login() {
+    this.router.navigate(['login']);
+  }
+
+  logout() {
+    this.isAuthenticated = false;
+    this.dataAccess.setAuthentication(false);
+    this.router.navigate(['']);
+  }
 }

@@ -1,0 +1,76 @@
+<div class="jumbotron text-center pb-1 mb-0">
+    <h1 class="display-6 mt-3">Add New Category</h1>
+</div>
+<hr>
+
+<div>
+    <div class="row" style="margin: 0">
+        <div class="col-4 p-0" id="sticky-sidebar">
+            <div class="bg-dark-gray">
+                <div class="px-3 container">
+                    <div class="accordion" id="accordionExample">
+                        <div *ngFor="let category of categoryList;let i = index" class="accordion-item">
+                            <h2 class="accordion-header" [id]="'heading' + i">
+                                <button class="accordion-button collapsed row" type="button" data-bs-toggle="collapse"
+                                    [attr.data-bs-target]="'#collapse' + i" aria-expanded="false"
+                                    [attr.aria-controls]="'collapse' + i">
+                                    <span class="col-10 h5">{{category.categoryName}}</span>
+                                    <span class="col h5"><b>{{category.productList?.length || '0'}}</b></span>
+                                </button>
+                                
+                            </h2>
+                            <div [id]="'collapse' + i" class="accordion-collapse collapse"
+                                [attr.aria.labelledby]="'heading' + i" data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="container">
+                                        <ul *ngFor="let product of category.productList" class="list-group">
+                                            <li type="button" class="list-group-item list-group-item-action">{{product}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col order-1 pl-5" id="main">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="col-auto">
+                                <label class="col-form-label">Category Name</label>
+                            </div>
+                            <div class="col-auto">
+                                <input [(ngModel)]="categoryName" type="text" class="form-control">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-auto mx-5">
+                                <label class="col-form-label">Date</label>
+                            </div>
+                            <div class="col-auto mx-5">
+                                <input [(ngModel)]="dateAdded" id="dateAdded" type="text" class="form-control" disabled>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">
+                                <div class="mt-5">
+                                    <button (click)="submit()" style="margin-right: 30px" class="btn btn-lg btn-success">Add</button>
+                                    <button (click)="clearAll()" class="btn btn-lg btn-dark">Clear All</button>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
